@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <style>
+            ul {
+                list-style: none;
+            }
+
+            li {
+                padding: 8px;
+                margin: 8px;
+            }
+
+            li[sortable-item] {
+                display: block;
+                color: red;
+                background: yellow;
+                cursor: move;
+                border: 1px solid red;
+
+            }
+
+            li.sortable-placeholder {
+                height: 20px;
+                border: 2px dashed gray;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+        <script src="js/angularsortable.js"></script>
+        <script>
+            var app = angular.module('app', ['sortable']);
+            app.controller('test', function($scope) {
+                $scope.items = [];
+
+                for(var i = 0; i < 10; i++)
+                    $scope.items.push({
+                        label: 'Item ' + i,
+                        index: i
+                    });
+            });
+        </script>
+    </head>
+    <body ng-app="app" ng-controller="test">
+        <ul sortable-list>
+            <li ng-repeat="item in items" sortable-item model="item.index">{{ item.index }}. {{ item.label }}</li>
+        </ul>
+    </body>
+</html>
