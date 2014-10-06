@@ -36,12 +36,24 @@
                         label: 'Item ' + i,
                         index: i
                     });
+
+                $scope.updateList = function() {
+                    console.log('List updated');
+                    console.dir($scope.items);
+                };
+
+                $scope.startDrag = function(e) {
+                    console.log('Start drag')
+                    
+                    if(e.target.tagName != 'LI')
+                        return false;
+                }
             });
         </script>
     </head>
     <body ng-app="app" ng-controller="test">
-        <ul sortable-list>
-            <li ng-repeat="item in items" sortable-item model="item.index">{{ item.index }}. {{ item.label }}</li>
+        <ul sortable-list update="updateList()">
+            <li ng-repeat="item in items" sortable-item model="item.index" start-drag="startDrag">{{ item.index }}. {{ item.label }}</li>
         </ul>
     </body>
 </html>

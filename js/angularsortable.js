@@ -19,6 +19,8 @@ angular.module('sortable', [])
                 this.items = function() {
                     return element.children;
                 };
+
+                this.onUpdate($scope.update);
             },
             link: function(scope, el, attrs) {
                 var element = el[0];
@@ -38,7 +40,8 @@ angular.module('sortable', [])
         return {
             restrict: 'AC',
             scope: {
-                model: '='
+                model: '=',
+                startDrag: '='
             },
             require: '^sortableList',
             link: function(scope, el, attrs, listCtrl) {
@@ -63,6 +66,9 @@ angular.module('sortable', [])
                 });
 
                 element.addEventListener('mousedown', function(e) {
+                    if(scope.startDrag && scope.startDrag(e) === false)
+                        return;
+
                     var x = e.clientX;
                     var y = e.clientY;
                     var w = element.offsetWidth;
