@@ -20,6 +20,11 @@ angular.module('sortable', [])
                     return element.children;
                 };
 
+                this.itemIndex = function(el) {
+                    var elements = Array.prototype.slice.call(this.items());
+                    return elements.indexOf(el);
+                };
+
                 this.onUpdate($scope.update);
             },
             link: function(scope, el, attrs) {
@@ -49,19 +54,15 @@ angular.module('sortable', [])
                 var list = element.parentNode;
                 var isDragged, dX, dY, wrapEl, beforeEl, placeholderEl;
 
-                function index() {
-                    var elements = Array.prototype.slice.call(listCtrl.items());
-                    return elements.indexOf(element);
-                }
-
                 function insertEl(el) {
                     list.appendChild(el);
-                    list.insertBefore(el, beforeEl);
+                    if(beforeEl)
+                        list.insertBefore(el, beforeEl);
                 }
 
                 listCtrl.onUpdate(function() {
                     scope.$apply(function() {
-                        scope.model = index();
+                        scope.model = listCtrl.itemIndex(element);
                     });
                 });
 
@@ -81,7 +82,7 @@ angular.module('sortable', [])
                     placeholderEl = document.createElement(element.tagName);
                     placeholderEl.className = 'sortable-placeholder';
 
-                    beforeEl = element;
+                    beforeEl = element.nextSibling;
                     insertEl(placeholderEl);
 
                     wrapEl = document.createElement('div');
@@ -90,6 +91,8 @@ angular.module('sortable', [])
                     wrapEl.style.position = 'absolute';
                     wrapEl.style.width = w + 'px';
                     wrapEl.style.height = h + 'px';
+                    wrapEl.style.left = (x - dX) + 'px';
+                    wrapEl.style.top = (y - dY) + 'px';
 
                     isDragged = true;
                 });
