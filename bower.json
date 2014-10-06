@@ -1,0 +1,23 @@
+{
+  "name": "angular-sortable",
+  "version": "0.0.9",
+  "homepage": "https://github.com/wachme/angular-sortable",
+  "authors": [
+    "Karol Wach <karol@wach.me>"
+  ],
+  "description": "Angular drag & drop sortable lists",
+  "main": "js/angularsortable.js",
+  "keywords": [
+    "angular",
+    "sortable",
+    "drag&drop"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
